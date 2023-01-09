@@ -10,8 +10,8 @@ class People:
 
     def create_user(self):
         while True:
-            self.last_name = input(f'\n Для заполнения базы данных читателей'
-                                   f'Введите фамилию или 0, что бы закончить ввод\n'
+            self.last_name = input(f'\nДля заполнения базы данных читателей '
+                                   f'введите фамилию или 0, что бы закончить ввод\n'
                                    f'-> ').title()
             if self.last_name == "0":
                 break
@@ -22,14 +22,16 @@ class People:
         return self.user_card
 
     def verification(self):
+        self.name_verefication = None
         name = input(f'Введите вашу фамилию и имя\n'
                      f'-> ').title()
-        if name in self.user_card:
-            print(f'Пользователь с такими данными есть в базе. Вы можете заказать книгу')
-
+        if name in self.user_card[self.membership_number]:
+            print(f'Пользователь с такими данными есть в базе. Вы можете заказать книгу.')
+            self.name_verefication = True
         else:
             print(f'Извините, но пользователя с такими данными нет в базе нашей библиотеки, '
                   f'вам нужно пройти в администрацию.')
+            self.name_verefication = False
 
 library = Library()
 print(library, '\n')
@@ -43,7 +45,8 @@ for i in (librarian1, librarian2, librarian3):
 people = People()
 print(people.create_user())
 people.verification()
-people = BookFactory()
-people.create_book()
+if people.name_verefication == True:
+    people = BookFactory()
+    people.create_book()
 
 
